@@ -1,9 +1,12 @@
 #ifndef SYSTEM_PARSER_H
 #define SYSTEM_PARSER_H
 
+#include <boost/algorithm/string/replace.hpp>
 #include <fstream>
 #include <regex>
 #include <string>
+#include <sstream>
+#include <unistd.h>
 
 namespace LinuxParser {
 // Paths
@@ -26,25 +29,8 @@ int TotalProcesses();
 int RunningProcesses();
 std::string OperatingSystem();
 std::string Kernel();
-
-// CPU
-enum CPUStates {
-  kUser_ = 0,
-  kNice_,
-  kSystem_,
-  kIdle_,
-  kIOwait_,
-  kIRQ_,
-  kSoftIRQ_,
-  kSteal_,
-  kGuest_,
-  kGuestNice_
-};
-std::vector<std::string> CpuUtilization();
-long Jiffies();
-long ActiveJiffies();
-long ActiveJiffies(int pid);
-long IdleJiffies();
+template <typename T>
+T SearchValue(std::string file_name, std::string searched_key);
 
 // Processes
 std::string Command(int pid);
